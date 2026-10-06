@@ -37,7 +37,12 @@ const nullBool = IsarObject_NULL_BOOL;
 const falseBool = IsarObject_FALSE_BOOL;
 const trueBool = IsarObject_TRUE_BOOL;
 
-const String binariesUrl = 'https://binaries.isar-community.dev';
+/// The release of this fork that holds the binaries built on libmdbx v0.13.12.
+const String binariesUrl =
+    'https://github.com/stephanfeb/isar-community/releases/download';
+
+/// The libmdbx release the binaries of [binariesUrl] are built on.
+const String binariesLibmdbxVersion = '0.13.12';
 
 bool _isarInitialized = false;
 
@@ -147,7 +152,9 @@ Future<void> _downloadIsarCore(String libraryPath) async {
     return;
   }
   final remoteName = Abi.current().remoteName;
-  final uri = Uri.parse('$binariesUrl/${Isar.version}/$remoteName');
+  final uri = Uri.parse(
+    '$binariesUrl/${Isar.version}-libmdbx-$binariesLibmdbxVersion/$remoteName',
+  );
   final request = await HttpClient().getUrl(uri);
   final response = await request.close();
   if (response.statusCode != 200) {

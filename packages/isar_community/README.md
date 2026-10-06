@@ -1,3 +1,25 @@
+> **This fork** is `isar_community` 3.3.2 with the native library built on libmdbx v0.13.12 instead of `v0.13.8-temp-upstream-fix`.
+>
+> On macOS and iOS, libmdbx `v0.13.8-temp-upstream-fix` preallocates the whole new file size past the end of the database file every time the file grows, and the space is never released: a 135 MiB database holds 1.9 GiB on disk, a 765 MiB one about 59 GiB ([#85](https://github.com/isar-community/isar-community/issues/85)). libmdbx fixed it in v0.13.9. This branch is the 3.3.2 tag plus the change of [#129](https://github.com/isar-community/isar-community/pull/129), with the binaries committed in `packages/isar_community_flutter_libs` and published as the release [`3.3.2-libmdbx-0.13.12`](https://github.com/stephanfeb/isar-community/releases/tag/3.3.2-libmdbx-0.13.12), which is where `Isar.initializeIsarCore(download: true)` downloads from. Only the macOS and iOS binaries are rebuilt; the others are those of the published 3.3.2 package.
+>
+> Use it until upstream releases the fix:
+>
+> ```yaml
+> dependency_overrides:
+>   isar_community:
+>     git:
+>       url: https://github.com/stephanfeb/isar-community.git
+>       ref: 3.3.2-libmdbx-0.13.12
+>       path: packages/isar_community
+>   isar_community_flutter_libs: # Flutter apps only
+>     git:
+>       url: https://github.com/stephanfeb/isar-community.git
+>       ref: 3.3.2-libmdbx-0.13.12
+>       path: packages/isar_community_flutter_libs
+> ```
+>
+> A Dart-only project keeps using a `libisar.dylib` it downloaded earlier: delete that file once so the fixed one is downloaded. Space a database already holds past its end is not given back by the fixed library; with the database closed, extending the file by one page and truncating it back to its length releases it.
+
 > ⚠️ This repository is a fork of the [original project](https://github.com/isar/isar), focusing primarily on bug fixes and small updates for version 3. Our objective is to enhance the stability and reliability of the codebase while implementing minor improvements to refine the user experience. See details below on how to use this community fork.
 
 <p align="center">

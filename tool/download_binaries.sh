@@ -1,7 +1,7 @@
 #!/bin/bash
 
 version=`dart packages/isar_community/tool/get_version.dart`
-binariesUrl="https://binaries.isar-community.dev/$ISAR_VERSION"
+binariesUrl="https://github.com/stephanfeb/isar-community/releases/download/$ISAR_VERSION-libmdbx-0.13.12"
 
 
 curl "${binariesUrl}/libisar_android_arm64.so" -o packages/isar_community_flutter_libs/android/src/main/jniLibs/arm64-v8a/libisar.so --create-dirs -L -f
