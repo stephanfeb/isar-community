@@ -1,0 +1,6 @@
+# This fork commits the native binaries: a git dependency gets no publish step.
+!*.so
+!*.a
+!*.dylib
+!*.dll
+!*.xcframework/
